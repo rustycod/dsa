@@ -214,6 +214,7 @@ public class BinaryTree {
 			// visiting root node
 			listNodeValues.add(root.data);
 		}
+		
 	}
 	
 }
