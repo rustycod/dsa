@@ -101,5 +101,43 @@ public class BinarySearch {
 
     	return count;
 	}
+
+	public int searchInRotatedSortedArray(int[] nums, int target) {
+        
+        int start = 0;
+        int end = nums.length - 1;
+
+        int mid = 0;
+
+        // first check array is in ascending or descending order
+        // there are three cases:
+        // 1. mid lies before pivot, it means mid is greater than start
+        // 2. mid is after pivot, it means mid is smaller than start
+
+        while(start <= end) {
+            mid = start + (end - start) / 2;
+
+            if(nums[mid] == target) return mid;
+
+            if(nums[mid] >= nums[start]) { // case 1: left side is sorted
+                if(nums[mid] > target && target >= nums[start]) {
+                    end = mid - 1;
+                } else {
+                    start = mid + 1;
+                }
+            } else { // case 2: right side is sorted
+                if(nums[mid] > target && target <= nums[end]) {
+                    start = mid + 1;
+                } else {
+                    end = mid - 1;
+                }
+            }
+        }
+
+        return -1;
+    }
+
+
+	
 	
 }
