@@ -102,6 +102,7 @@ public class BinarySearch {
     	return count;
 	}
 
+	// O(log n)
 	public int searchInRotatedSortedArray(int[] nums, int target) {
         
         int start = 0;
