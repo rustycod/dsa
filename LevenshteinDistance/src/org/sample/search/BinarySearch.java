@@ -17,6 +17,8 @@ public class BinarySearch {
 		System.out.println("result is: "+BinarySearch.binarySearch(array3, 20));		
 		
 	}
+
+	// ------------------------------------------------------------------------------------------------
 	
     public static int binarySearch(int[] arr, int target) {
 
@@ -64,6 +66,7 @@ public class BinarySearch {
 		}        
     }
 
+	// ------------------------------------------------------------------------------------------------
 
 	// O(n)
     // reuturn indices of first and last occurrances
@@ -103,6 +106,71 @@ public class BinarySearch {
     	return count;
 	}
 
+	public int[] searchOccurences(int[] nums, int target) {
+
+        int start = 0;
+        int end = nums.length - 1;
+    
+
+        // find first occurence first
+        int firstPosition = getFirstOccurence(nums, target, start, end);
+
+        // find last occurence then
+        int lastPosition = getLastOccurence(nums, target, start, end);
+
+        return new int[]{firstPosition, lastPosition};
+    }
+
+
+    private int getFirstOccurence(int[] nums, int target, int start, int end) {
+
+        if(start > end) return -1;
+
+        int mid = start + (end - start) / 2;
+    
+        // important: 
+        // 1. corner case when first elment in the array is the first occurence.
+        // 2. fist condition "must be" the first one as mid-1 will get out of bounds.
+        // 3. second condition checks that 'mid' is the first occurrence of the target
+        if((mid == 0 && nums[mid] == target) 
+            || (nums[mid] == target && nums[mid-1] != target)) {
+                return mid;
+        } 
+
+        // important: in case target is equal, push the processing towards left to find first occurance
+        if(nums[mid] >= target) { // change in condition
+            return getFirstOccurence(nums, target, start, mid - 1);
+        } else {
+            return getFirstOccurence(nums, target, mid + 1, end);
+        }
+    }
+
+
+    private int getLastOccurence(int[] nums, int target, int start, int end) {
+
+        if(start > end) return -1;
+
+        int mid = start + (end - start) / 2;
+    
+        // important: 
+        // 1. corner case when last elment in the array is the last occurence.
+        // 2. fist condition "must be" the first oneas mid+1 will get out of bounds.
+        // 3. second condition checks that 'mid' is the last occurrence of the target
+        if((mid == (nums.length -1 ) && nums[mid] == target) 
+            || (nums[mid] == target && nums[mid+1] != target)) {
+                return mid;
+        } 
+
+        // important: in case target is equal, push the processing towards right to find last occurance
+        if(nums[mid] > target) { // change in condition
+            return getLastOccurence(nums, target, start, mid - 1);
+        } else {
+            return getLastOccurence(nums, target, mid + 1, end);
+        }
+    }
+
+	// ------------------------------------------------------------------------------------------------
+	
 	// O(log n)
 	public int searchInRotatedSortedArray(int[] nums, int target) {
         
