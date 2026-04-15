@@ -169,6 +169,81 @@ public class BinarySearch {
         }
     }
 
+	// iterative version
+	public int[] searchOccurencesIteratively(int[] nums, int target) {
+
+        int start = 0;
+        int end = nums.length - 1;
+    
+
+        // find first occurence first
+        int firstPosition = getFirstOccurenceIteratively(nums, target, start, end);
+
+        // find last occurence then
+        int lastPosition = getLastOccurenceIteratively(nums, target, start, end);
+
+        return new int[]{firstPosition, lastPosition};
+    }
+
+
+    private int getFirstOccurenceIteratively(int[] nums, int target, int start, int end) {
+
+        int mid = 0;
+
+        while(start <= end) {
+
+            mid = start + (end - start) / 2;
+    
+            // important: 
+            // 1. corner case when first elment in the array is the first occurence.
+            // 2. fist condition "must be" the first one as mid-1 will get out of bounds.
+            // 3. second condition checks that 'mid' is the first occurrence of the target
+            if((mid == 0 && nums[mid] == target) 
+                || (nums[mid] == target && nums[mid-1] != target)) {
+                    return mid;
+            } 
+
+            // important: in case target is equal, push the processing towards left to find first occurance
+            if(nums[mid] >= target) { // change in condition
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+
+        }
+
+        return -1;
+    }
+
+
+    private int getLastOccurenceIteratively(int[] nums, int target, int start, int end) {
+
+        int mid = 0;
+
+        while(start <= end) {
+
+            mid = start + (end - start) / 2;
+    
+            // important: 
+            // 1. corner case when last elment in the array is the last occurence.
+            // 2. fist condition "must be" the first oneas mid+1 will get out of bounds.
+            // 3. second condition checks that 'mid' is the last occurrence of the target
+            if((mid == (nums.length -1 ) && nums[mid] == target) 
+                || (nums[mid] == target && nums[mid+1] != target)) {
+                    return mid;
+            } 
+
+            // important: in case target is equal, push the processing towards right to find last occurance
+            if(nums[mid] > target) { // change in condition
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        }
+
+        return -1;
+    }   
+	
 	// ------------------------------------------------------------------------------------------------
 	
 	// O(log n)
