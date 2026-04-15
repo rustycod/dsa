@@ -62,5 +62,32 @@ public class BinarySearch {
             return searchRecursive(arr, x, mid + 1, end);
 		}        
     }
+
+
+	// O(n)
+    // reuturn indices of first and last occurrances
+    public int[] searchRange(int[] nums, int target) {
+
+        int firstPositionIndex = -1;
+        int lastPositionIndex = -1;
+
+        for(int i = 0; i < nums.length; i++) {
+
+            if(nums[i] == target && firstPositionIndex == -1) {
+                firstPositionIndex = i;
+            } else if(nums[i] != target && firstPositionIndex != -1) {
+                lastPositionIndex = i - 1;
+                break;
+            } 
+        }
+
+        // important corner case
+        if(firstPositionIndex != -1 && lastPositionIndex == -1) {
+            lastPositionIndex = nums.length - 1;
+        }
+
+        return new int[]{firstPositionIndex, lastPositionIndex}; 
+        
+    }
 	
 }
