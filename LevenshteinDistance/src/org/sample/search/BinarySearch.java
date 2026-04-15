@@ -1,5 +1,8 @@
 package org.sample.search;
 
+// Time Complexity: O(log(n)) Using Binary Search
+// Auxiliary Space: O(log(n)) due to recursive calls, otherwise iterative version uses Auxiliary Space of O(1).
+
 public class BinarySearch {
 
 	public static void main(String[] args) {
