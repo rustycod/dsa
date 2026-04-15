@@ -28,7 +28,7 @@ public class BinarySearch {
         /*
          * In binary search iteration method ‘=’ in condition “start <= end” is required as there could 
          * be only one number present and mid should point to this. 
-         * ‘Return’ in mid condition will help in terminating the while loop in this case.
+         * ‘Return’ in mid condition 'if(arr[mid] == target)' will help in terminating the while loop in this case.
          * 
          */
         
