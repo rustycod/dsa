@@ -254,34 +254,38 @@ public class BinarySearch {
 
         int mid = 0;
 
-        // first check array is in ascending or descending order
-        // there are three cases:
-        // 1. mid lies before pivot, it means mid is greater than start
-        // 2. mid is after pivot, it means mid is smaller than start
-
         while(start <= end) {
+
             mid = start + (end - start) / 2;
 
             if(nums[mid] == target) return mid;
 
-            if(nums[mid] >= nums[start]) { // case 1: left side is sorted
-                if(nums[mid] > target && target >= nums[start]) {
+            // important: left side is sorted
+            if(nums[mid] > nums[start]) {
+                if(target >= nums[start] && target < nums[mid]) {
+                    // target is on left side
                     end = mid - 1;
                 } else {
+                    // target is on right side
                     start = mid + 1;
                 }
-            } else { // case 2: right side is sorted
-                if(nums[mid] > target && target <= nums[end]) {
+
+            } else { // important: right side is sorted
+                if(target <= nums[end] && target > nums[mid]) {
+                    // target is on right side
                     start = mid + 1;
                 } else {
-                    end = mid - 1;
+                    // target is on right side
+                    end = mid -1;
                 }
             }
         }
 
         return -1;
+        
     }
 
+	// ------------------------------------------------------------------------------------------------
 
 	public int findMaximumInBitonicArray(int[] arr) {
         
