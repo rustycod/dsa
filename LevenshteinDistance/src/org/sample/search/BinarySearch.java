@@ -43,5 +43,21 @@ public class BinarySearch {
         
         return -1;
     }
+
+
+	public int searchRecursive(int arr[], int x, int start, int end) {
+        
+       if(start > end) return -1;
+        
+        int mid = start + (end - start) / 2;
+    
+        if(arr[mid] == x) {
+            return mid;
+        } else if(arr[mid] > x) {
+            return searchRecursive(arr, x, start, mid - 1);
+        } else {
+            return searchRecursive(arr, x, mid + 1, end);
+		}        
+    }
 	
 }
