@@ -9,47 +9,15 @@ public class BinaryTree {
 
 	Node root;
 	
-	// insert a new node
-	public Node insert(int value) {
-		
-		Node newNode = null;
-		
-		if(root == null) {
-			newNode = new Node(value);
-			root = newNode;
-			return newNode ;
-		}
-		
-		Queue<Node> queue = new LinkedList<Node>();
-		queue.add(root);
-		
-		while(!queue.isEmpty()) {
-			
-			Node currentNode = queue.poll();
-			
-			if(currentNode.left == null) {
-				newNode = new Node(value);
-				currentNode.left = newNode;
-				return newNode;
-			} else {
-				queue.add(currentNode.left);
-			}
-			
-			if(currentNode.right == null) {
-				newNode = new Node(value);
-				currentNode.right = newNode;
-				return newNode;
-			} else {
-				queue.add(currentNode.right);
-			}
-		}
-		
-		return newNode;
-	}
 	
+	// ------------------------------------------------------------------------
+	
+	// find Max
 	
 	// calling code is responsible to check whether root is null
 	// recursive approach
+	
+	// if return type is object then it's easy to handle null-root BST
 	public int findMax(Node root) {
 		
 		int leftNodeValue = Integer.MIN_VALUE;
@@ -113,7 +81,7 @@ public class BinaryTree {
 		
 		while(!queue.isEmpty()) {
 			
-			int currentValue = queue.peek();
+			int currentValue = queue.poll();
 			
 			if(currentValue > max) {
 				max = currentValue;
@@ -131,25 +99,12 @@ public class BinaryTree {
 		return max;
 	}
 	
+	// ------------------------------------------------------------------------
+	
 	// calling code is responsible to check whether root is null
 	// serach an element
 	// recursive approach
-	/*public Node search(Node root, int value) {
-
-		if(root.val == value) return root;
-
-		Node node = null;
-		if(root.left != null) {
-			node = search(root.left, value);
-		}
-
-		if(root.right != null) {
-			node = search(root.right, value);
-		}	
 		
-		return node;
-	}*/
-	
 	public boolean search(Node root, int value) {
 
 		if(root == null) return false;
@@ -192,6 +147,47 @@ public class BinaryTree {
 		return node;
 	}
 	
+	// ------------------------------------------------------------------------
+	
+	// insert a new node
+	public Node insert(int value) {
+		
+		Node newNode = null;
+		
+		if(root == null) {
+			newNode = new Node(value);
+			root = newNode;
+			return newNode ;
+		}
+		
+		Queue<Node> queue = new LinkedList<Node>();
+		queue.add(root);
+		
+		while(!queue.isEmpty()) {
+			
+			Node currentNode = queue.poll();
+			
+			if(currentNode.left == null) {
+				newNode = new Node(value);
+				currentNode.left = newNode;
+				return newNode;
+			} else {
+				queue.add(currentNode.left);
+			}
+			
+			if(currentNode.right == null) {
+				newNode = new Node(value);
+				currentNode.right = newNode;
+				return newNode;
+			} else {
+				queue.add(currentNode.right);
+			}
+		}
+		
+		return newNode;
+	}
+	
+	// ------------------------------------------------------------------------
 	
 	// traversals methods
 	

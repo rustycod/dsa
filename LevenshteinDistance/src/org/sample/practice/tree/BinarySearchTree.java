@@ -19,6 +19,323 @@ public class BinarySearchTree {
 
 	Node root;
 	
+	
+	// ------------------------------------------------------------------------
+	
+	// find minimum
+	
+	// if return type is object then it's easy to handle null-root BST
+	public Node findMinimumIterative(Node root) {
+		if(root == null) return null;
+		
+		while(root.left != null) {
+			root = root.left;
+		}
+		
+		return root;
+	}
+	
+	// proper null-root handling is needed in a wrapper method
+	public int findMinimumIterative2(Node root) {
+
+		if(root == null) return -1;
+		
+		while(root.left != null) {
+			root = root.left;
+		}
+
+		return root.val;
+	}
+
+	
+	// null-root BST has to be handled in a wrapper method 
+	// as the condition conflicts with the check for left-most node that has left child as null.
+	public int findMinimumRecursive(Node root) {
+		
+		if(root.left == null) return root.val; // this is the left-most node
+		return findMinimumRecursive(root.left);
+		
+		// This 'return' statements will return a constant value from all the methods 
+		// in the call stack.
+
+	}
+	
+	// ------------------------------------------------------------------------
+	
+	// find maximum
+	
+	// if return type is object then it's easy to handle null-root BST
+	public Node findMaximumIterative(Node root) {
+		if(root == null) return null;
+		
+		while(root.left != null) {
+			root = root.left;
+		}
+		
+		return root;
+	}
+	
+	// proper null-root handling is needed in a wrapper method
+	public int findMaximumIterative2(Node root) {
+
+		if(root == null) return -1;
+		
+		while(root.right != null) {
+			root = root.right;
+		}
+
+		return root.val;
+	}
+
+	
+	// null-root BST has to be handled in a wrapper method 
+	// as the condition conflicts with the check for rihgt-most node that has right child as null.
+	public int findMaximumRecursive(Node root) {
+		
+		if(root.right == null) return root.val; // this is the right-most node.
+		return findMinimumRecursive(root.right);
+		
+		// This 'return' statements will return a constant value from all the methods 
+		// in the call stack.
+
+	}
+	
+	
+	// ------------------------------------------------------------------------
+	
+	// get size of a tree
+	
+	// get the number of nodes in a tree recursively
+	public int getSizeRecursive(Node root) {
+		
+		if(root == null) return 0;
+		
+		return getSizeRecursive(root.left) + 1 + getSizeRecursive(root.right);
+	}
+	
+	// BFS approach
+	public int getSizeIteratively(Node root) {
+		
+		if(root == null) return 0;
+		
+		int count = 0;
+		Queue<Node> queue = new LinkedList<Node>();
+		queue.add(root);
+		
+		while(!queue.isEmpty()){
+			Node temp = queue.poll();
+			count++;
+			
+			if(temp.left != null) {
+				queue.add(temp.left);
+			}
+			
+			if(temp.right != null){
+				queue.add(temp.right);
+			}
+		}
+		
+		return count;
+	}
+	
+		
+	// pre-order traversal approach
+	public int getSizeIteratively2(Node root) {
+		
+		if(root == null) return 0;
+
+		Stack<Node> stack = new Stack<>();
+		stack.push(root);
+
+		int count = 0;
+
+		while(!stack.isEmpty()) {
+
+			Node currentNode = stack.pop();
+			count++;
+
+			if(currentNode.left != null) {
+				stack.push(currentNode.left);
+			} 
+
+			if(currentNode.right != null) {
+				stack.push(currentNode.right);
+			}
+
+		}
+
+		return count;
+
+	}
+	
+	// ------------------------------------------------------------------------
+	
+	// traversals methods
+	
+	// list to hold values of tree for testing purpose
+	// this list must be reassigned in order to remove earlier values
+	List<Integer> listNodeValues = new ArrayList<Integer>();
+	
+	public void inOrder(Node root) {
+		if(root != null) {
+			inOrder(root.left);
+			// visiting root node
+			listNodeValues.add(root.val);
+			inOrder(root.right);
+		}
+	}
+	
+	public void preOrder(Node root) {
+		if(root != null) {
+			// visiting root node
+			listNodeValues.add(root.val);
+			preOrder(root.left);
+			preOrder(root.right);
+		}
+	}
+	
+	public void postOrder(Node root) {
+		if(root != null) {
+			postOrder(root.left);
+			postOrder(root.right);
+			// visiting root node
+			listNodeValues.add(root.val);
+		}
+	}
+	
+	public void inOrderMorris(Node root) {
+
+		while(root != null) {
+			
+			if(root.left == null) {
+				// visiting root node
+				listNodeValues.add(root.val);
+				root = root.right;
+			} else {
+				
+				// find predecessor of root
+				Node currentNode = root.left;
+				
+				if(currentNode.right != null) {
+					while(currentNode.right != null) {
+						
+						if(currentNode.right == root) {
+							// visiting root node
+							listNodeValues.add(root.val);
+							root = root.right;
+							break;
+						}
+						
+						currentNode = currentNode.right;
+					}
+					
+					continue;
+				} 
+				
+				currentNode.right = root;
+				root = root.left;
+			}
+		}
+	}
+	
+	// ------------------------------------------------------------------------
+	
+	// other traversals
+	
+	// RC07008
+	public List<Integer> printLevelOrderReverse(Node root) {
+        Queue<Node> queue = new LinkedList<Node>();
+        Stack<Integer> stack = new Stack<Integer>();
+    
+        List<Integer> listValuesReverse = new ArrayList<Integer>(); // for testing purpose in junit
+        
+        if(root == null) {
+        	return null;
+        }
+        
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            // poll() removes the present head.
+            Node tempNode = queue.poll();
+ 
+            /*Enqueue right child */
+            if (tempNode.right != null) {
+                queue.add(tempNode.right);
+            }
+
+            /*Enqueue left child */
+            if (tempNode.left != null) { 
+                queue.add(tempNode.left);
+            }
+            
+            stack.push(tempNode.val);
+        }
+        
+        while(!stack.isEmpty()) {
+        	//System.out.print(" " + stack.pop());
+        	listValuesReverse.add(stack.pop());
+        }
+        
+        return listValuesReverse;
+        
+    }
+	
+	
+	// ------------------------------------------------------------------------	
+	
+	// height / depth / level of the tree
+	public int getHeight(Node root) {
+		
+		if(root == null) return -1;
+		
+		int heightOfLeftSubTree = getHeight(root.left);
+		int heightOfRightSubTree = getHeight(root.right);
+		
+		if(heightOfLeftSubTree > heightOfRightSubTree) {
+			return heightOfLeftSubTree + 1;
+		} else {
+			return heightOfRightSubTree + 1;
+		}
+	}
+
+	// height / depth / level of the tree
+	public int getHeightIteratively(Node root) {
+		
+	    if(root == null) return 0;
+		
+			int level = 0;
+			Queue<Node> queue = new LinkedList<>();
+			queue.add(root);
+			queue.add(null); // identifier for each level
+			
+			while(!queue.isEmpty()) {
+				
+				Node temp = queue.poll();
+				
+				if(temp == null) {
+					level++;
+					
+					if(!queue.isEmpty()) {
+						queue.add(null);
+					}
+				} else {
+					if(temp.left != null) {
+						queue.add(temp.left);
+					}
+					
+					if(temp.right != null) {
+						queue.add(temp.right);
+					}				
+				}
+			}
+			
+			return level;
+	}
+	
+	// ------------------------------------------------------------------------		
+	
+	
+	
 	// insert a new node in tree
 	public boolean insert(int val) {
 		
@@ -226,97 +543,9 @@ public class BinarySearchTree {
 		return successorNode;
 		
 	}*/
-	// find minimum
-	public Node findMinimum(Node root) {
-		if(root == null) return null;
-		
-		while(root.left != null) {
-			root = root.left;
-		}
-		
-		return root;
-	}
 	
 	
-	// find maximum
-	public Node findMaximum(Node root) {
-		if(root == null) return null;
-		
-		while(root.right != null) {
-			root = root.right;
-		}
-		
-		return root;
-	}
-	
-	
-	// traversals methods
-	
-	// list to hold values of tree for testing purpose
-	// this list must be reassigned in order to remove earlier values
-	List<Integer> listNodeValues = new ArrayList<Integer>();
-	
-	public void inOrder(Node root) {
-		if(root != null) {
-			inOrder(root.left);
-			// visiting root node
-			listNodeValues.add(root.val);
-			inOrder(root.right);
-		}
-	}
-	
-	public void preOrder(Node root) {
-		if(root != null) {
-			// visiting root node
-			listNodeValues.add(root.val);
-			preOrder(root.left);
-			preOrder(root.right);
-		}
-	}
-	
-	public void postOrder(Node root) {
-		if(root != null) {
-			postOrder(root.left);
-			postOrder(root.right);
-			// visiting root node
-			listNodeValues.add(root.val);
-		}
-	}
-	
-	public void inOrderMorris(Node root) {
 
-		while(root != null) {
-			
-			if(root.left == null) {
-				// visiting root node
-				listNodeValues.add(root.val);
-				root = root.right;
-			} else {
-				
-				// find predecessor of root
-				Node currentNode = root.left;
-				
-				if(currentNode.right != null) {
-					while(currentNode.right != null) {
-						
-						if(currentNode.right == root) {
-							// visiting root node
-							listNodeValues.add(root.val);
-							root = root.right;
-							break;
-						}
-						
-						currentNode = currentNode.right;
-					}
-					
-					continue;
-				} 
-				
-				currentNode.right = root;
-				root = root.left;
-			}
-		}
-	}
 	
 	
 	/**
@@ -589,128 +818,9 @@ public class BinarySearchTree {
 	}
 	
 	
-	// get the number of nodes in a tree recursively
-	public int getSize(Node root) {
-		
-		if(root == null) return 0;
-		
-		return getSize(root.left) + 1 + getSize(root.right);
-	}
-	
-	// get the number of nodes in a tree iteratively
-	public int getSizeIteratively(Node root) {
-		
-		if(root == null) return 0;
-		
-		int count = 0;
-		Queue<Node> queue = new LinkedList<Node>();
-		queue.add(root);
-		
-		while(!queue.isEmpty()){
-			Node temp = queue.poll();
-			count++;
-			
-			if(temp.left != null) {
-				queue.add(temp.left);
-			}
-			
-			if(temp.right != null){
-				queue.add(temp.right);
-			}
-		}
-		
-		return count;
-	}
-	
-	// height / depth / level of the tree
-	public int getHeight(Node root) {
-		
-		if(root == null) return -1;
-		
-		int heightOfLeftSubTree = getHeight(root.left);
-		int heightOfRightSubTree = getHeight(root.right);
-		
-		if(heightOfLeftSubTree > heightOfRightSubTree) {
-			return heightOfLeftSubTree + 1;
-		} else {
-			return heightOfRightSubTree + 1;
-		}
-	}
-
-	// height / depth / level of the tree
-	public int getHeightIteratively(Node root) {
-		
-		if(root == null) return -1;
-		
-		int level = -1;
-		Queue<Node> queue = new LinkedList<Node>();
-		queue.add(root);
-		queue.add(null); // identifier for each level
-		
-		while(!queue.isEmpty()) {
-			
-			Node temp = queue.poll();
-			
-			if(temp == null) {
-				level++;
-				
-				if(!queue.isEmpty()) {
-					queue.add(null);
-				}
-			} else {
-				if(temp.left != null) {
-					queue.add(temp.left);
-				}
-				
-				if(temp.right != null) {
-					queue.add(temp.right);
-				}				
-			}
-		}
-		
-		return level;
-	}
 	
 
-	// RC07008
-	public List<Integer> printLevelOrderReverse(Node root) {
-        Queue<Node> queue = new LinkedList<Node>();
-        Stack<Integer> stack = new Stack<Integer>();
-    
-        List<Integer> listValuesReverse = new ArrayList<Integer>(); // for testing purpose in junit
-        
-        if(root == null) {
-        	return null;
-        }
-        
-        queue.add(root);
-        while (!queue.isEmpty()) {
-            // poll() removes the present head.
-            Node tempNode = queue.poll();
- 
-            /*Enqueue right child */
-            if (tempNode.right != null) {
-                queue.add(tempNode.right);
-            }
-
-            /*Enqueue left child */
-            if (tempNode.left != null) { 
-                queue.add(tempNode.left);
-            }
-            
-            stack.push(tempNode.val);
-        }
-        
-        while(!stack.isEmpty()) {
-        	//System.out.print(" " + stack.pop());
-        	listValuesReverse.add(stack.pop());
-        }
-        
-        return listValuesReverse;
-        
-    }
-	
-	
+		
 	// identical trees
 	public boolean areIdenticalTrees(Node root1, Node root2) {
 		
@@ -759,7 +869,6 @@ public class BinarySearchTree {
 		return leftSide || rightSide;
 		
 	}
-	
 	
 	// sum
 	public int sum(Node root) {

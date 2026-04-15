@@ -45,8 +45,8 @@ public class BinarySearchTreeTest {
 		assertTrue(bst.search(74).val == 74);
 		assertTrue(bst.search(4).val == 4);
 		
-		assertTrue(bst.findMinimum(bst.root).val == 2);
-		assertTrue(bst.findMaximum(bst.root).val == 77);
+		assertTrue(bst.findMinimumIterative(bst.root).val == 2);
+		assertTrue(bst.findMinimumIterative(bst.root).val == 77);
 		
 
 	}
@@ -306,7 +306,7 @@ public class BinarySearchTreeTest {
 		
 		assertEquals(expected, bst.listNodeValues);
 		
-		assertTrue(bst.getSize(bst.root) == 10);
+		assertTrue(bst.getSizeRecursive(bst.root) == 10);
 		assertTrue(bst.getSizeIteratively(bst.root) == 10);
 	}
 	
