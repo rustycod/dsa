@@ -20,6 +20,8 @@ public class BinarySearch {
         int start = 0;
         int end = arr.length - 1;
 
+		int mid = 0;
+
         /*
          * In binary search iteration method ‘=’ in condition “start <= end” is required as there could 
          * be only one number present and mid should point to this. 
@@ -29,7 +31,7 @@ public class BinarySearch {
         
         while(start <= end) { 
 
-            int mid = (start + end) / 2;
+			mid = start + (end - start) / 2;
             if(arr[mid] == target) {
                 return mid;
             } else if(arr[mid] > target) {
