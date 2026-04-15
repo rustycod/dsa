@@ -287,6 +287,45 @@ public class BinarySearch {
 
 	// ------------------------------------------------------------------------------------------------
 
+	    public int findMin(int[] nums) {
+
+        if(nums == null || nums.length == 0) {
+        	return -1;
+        }
+        
+        if(nums.length == 1) return nums[0];
+    	
+    	// array is sorted already
+        if(nums[0] < nums[nums.length-1]) {
+            return nums[0];
+        }
+
+        int start = 0;
+        int end = nums.length - 1;
+
+        int mid = 0;
+
+        while(start <= end) {
+
+            mid = start + (end - start) / 2;
+
+            if(nums[mid] > nums[mid+1]) {
+                return nums[mid+1];
+            }
+
+            if(nums[mid] > nums[start]) {
+                start = mid + 1;
+            } else {
+                end = mid - 1;
+            }
+        }
+
+        return -1;
+        
+    }
+
+	// ------------------------------------------------------------------------------------------------
+	
 	public int findMaximumInBitonicArray(int[] arr) {
         
         int start = 0;
