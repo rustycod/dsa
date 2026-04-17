@@ -152,4 +152,11 @@ public class DutchNationalFlag {
 		}
 	}
 	
+	public static void main(String[] args) {
+		DutchNationalFlag dnf = new DutchNationalFlag();
+		int[] array1 = new int[]{2, 1, 0, 0, 2, 0, 1, 1, 2, 0};
+		
+		dnf.threeWayDNF(array1);
+	}
+	
 }

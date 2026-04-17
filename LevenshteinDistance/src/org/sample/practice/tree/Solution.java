@@ -136,6 +136,43 @@ public class Solution {
     }
     
     
+    public int findMin(int[] nums) {
+
+        if(nums == null || nums.length == 0) {
+        	return -1;
+        }
+        
+        if(nums.length == 1) return nums[0];
+    	
+    	// array is sorted already
+        if(nums[0] < nums[nums.length-1]) {
+            return nums[0];
+        }
+
+        int start = 0;
+        int end = nums.length - 1;
+
+        int mid = 0;
+
+        while(start <= end) {
+
+            mid = start + (end - start) / 2;
+
+            if(nums[mid] > nums[mid+1]) {
+                return nums[mid+1];
+            }
+
+            if(nums[mid] > nums[start]) {
+                start = mid + 1;
+            } else {
+                end = mid - 1;
+            }
+        }
+
+        return -1;
+        
+    }
+    
     
     public static void main(String[] args) {
         Solution sol = new Solution();
@@ -153,7 +190,7 @@ public class Solution {
         TreeNode n6 = new TreeNode(6);
         n5.left = n6;*/
         
-        TreeNode n1 = new TreeNode(1);        
+        /*TreeNode n1 = new TreeNode(1);        
         TreeNode n2 = new TreeNode(2);
         TreeNode n3 = new TreeNode(3);
         TreeNode n4 = new TreeNode(4);
@@ -163,12 +200,12 @@ public class Solution {
         n1.right = n2;
         n2.right = n3;
         n3.right = n4;
-        n4.right = n5;
+        n4.right = n5;*/
       
-        //System.out.println(" sol.minDepth(n1): "+ sol.minDepth(n1));
+       int[] nums = new int[] {2,3,4,5,6,7,1};
         
-        
-        System.out.println("diameter: "+sol.diameterOfBinaryTree(n1));
+       
+        System.out.println("pivot: "+sol.findMin(nums));
         
         
         
