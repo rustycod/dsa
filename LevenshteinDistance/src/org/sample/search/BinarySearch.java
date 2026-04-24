@@ -325,7 +325,8 @@ public class BinarySearch {
     }
 
 	// ------------------------------------------------------------------------------------------------
-	
+
+	// taken from neetcode: https://www.youtube.com/watch?v=kMzJy9es7Hc
 	public int findMaximumInBitonicArray(int[] arr) {
         
     	int left = 0;
