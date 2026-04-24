@@ -286,7 +286,7 @@ public class BinarySearch {
     }
 
 	// ------------------------------------------------------------------------------------------------
-
+		// important: check neetcode version of the code (https://www.youtube.com/watch?v=nIVW4P8b1VA) instead of the below one
 	    public int findMin(int[] nums) {
 
         if(nums == null || nums.length == 0) {
