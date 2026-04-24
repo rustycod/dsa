@@ -261,7 +261,7 @@ public class BinarySearch {
             if(nums[mid] == target) return mid;
 
             // important: left side is sorted
-            if(nums[mid] > nums[start]) {
+            if(nums[mid] >= nums[start]) { // TODO check the equality case
                 if(target >= nums[start] && target < nums[mid]) {
                     // target is on left side
                     end = mid - 1;
